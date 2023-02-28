@@ -18,36 +18,68 @@ int primo;
 #include <stdio.h>
 
 int leerNumeroEntero(void);
-void numeroPrimo(int);
-void numeroArmstrong(int);
-void numeroRepunit(int);
-void numeroPerfecto(int);
-void trianguloPascal(int);
+void numeroPrimo(void);
+void numeroArmstrong(void);
+void numeroRepunit(void);
+void numeroPerfecto(void);
+void trianguloPascal(void);
 
 int main(int argc, char const* argv[]) {
     int number = 0, opcion = 0;
 
-    puts("Digite la opcion deseada:");
     do {
+        puts("\nMenu:\n1. Primo\n2. Armstrong\n3. Repunit\n4. Perfecto\n5. Triangulo pascal\n0. Salir");
+        opcion = leerNumeroEntero();
 
-        puts("Menu:\n1. Primo\n2. Armstrong\n3. Repunit\n4. Perfecto\n5. Triangulo pascal\n0. Salir");
-        
-    } while (1);
+        if (opcion > 5) puts("Digite una opcion valida!");
+
+    } while (opcion > 5);
+
+    switch (opcion) {
+    case 0:
+        return 0;
+        break;
+
+    case 1:
+        numeroPrimo();
+        break;
+
+    case 2:
+        numeroArmstrong();
+        break;
+
+    case 3:
+        numeroRepunit();
+        break;
+
+    case 4:
+        numeroPerfecto();
+        break;
+
+    case 5:
+        trianguloPascal();
+        break;
+
+    default:
+        puts("JIJIJA");
+        break;
+    }
 
     return 0;
 }
 
 int leerNumeroEntero(void) {
+    int number = 0;
+    do {
+        scanf("%d", &number);
+        if (number < 0) puts("Digite un numero mayor a 0");
+    } while (number < 0);
 
-    // while
-    //     int number;
-    // scanf("%d", &number);
-
-    // return number;
+    return number;
 }
 
-void numeroPrimo(int);
-void numeroArmstrong(int);
-void numeroRepunit(int);
-void numeroPerfecto(int);
-void trianguloPascal(int);
+void numeroPrimo(void);
+void numeroArmstrong(void);
+void numeroRepunit(void);
+void numeroPerfecto(void);
+void trianguloPascal(void);
