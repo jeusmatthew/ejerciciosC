@@ -1,4 +1,5 @@
 /*
+PENDIENTE
 dado un numero entero positivo
 menu:
 1. primo
@@ -18,6 +19,8 @@ int primo;
 #include <stdio.h>
 
 int leerNumeroEntero(void);
+float elevarAlExponente(float, float);
+unsigned digitosNumero(unsigned);
 void numeroPrimo(void);
 void numeroArmstrong(void);
 void numeroRepunit(void);
@@ -72,14 +75,51 @@ int leerNumeroEntero(void) {
     int number = 0;
     do {
         scanf("%d", &number);
-        if (number < 0) puts("Digite un numero mayor a 0");
+        if (number < 0) puts("Digite un numero entero");
     } while (number < 0);
 
     return number;
 }
 
-void numeroPrimo(void);
-void numeroArmstrong(void);
-void numeroRepunit(void);
-void numeroPerfecto(void);
-void trianguloPascal(void);
+float elevarAlExponente(float base, float exponent) {
+    float resultado;
+    resultado = exponent == 0?1:base * elevarAlExponente(base, exponent -1); 
+    return resultado;
+}
+unsigned digitosNumero(unsigned) {
+    return;
+}
+
+void numeroPrimo(void) {
+    puts("Digite un numero positivo");
+    int number = leerNumeroEntero();
+    _Bool esPrimo = 1;
+
+    for (int divider = 2; divider < number; divider++) {
+        if (number % divider == 0) {
+            esPrimo = 0;
+            break;
+        }
+    }
+
+    puts(esPrimo ? "El numero es primo" : "El numero no es primo");
+
+    return;
+}
+
+void numeroArmstrong(void) {
+
+    return;
+}
+
+void numeroRepunit(void) {
+    return;
+}
+
+void numeroPerfecto(void) {
+    return;
+}
+
+void trianguloPascal(void) {
+    return;
+}
