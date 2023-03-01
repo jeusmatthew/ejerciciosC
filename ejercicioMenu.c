@@ -21,6 +21,8 @@ int primo;
 int leerNumeroEntero(void);
 float elevarAlExponente(float, float);
 unsigned digitosNumero(unsigned);
+void elegirOpcion(const int);
+
 void numeroPrimo(void);
 void numeroArmstrong(void);
 void numeroRepunit(void);
@@ -33,14 +35,28 @@ int main(int argc, char const* argv[]) {
     do {
         puts("\nMenu:\n1. Primo\n2. Armstrong\n3. Repunit\n4. Perfecto\n5. Triangulo pascal\n0. Salir");
         opcion = leerNumeroEntero();
-
         if (opcion > 5) puts("Digite una opcion valida!");
+        else elegirOpcion(opcion);
 
     } while (opcion > 5);
 
-    switch (opcion) {
+    return 0;
+}
+
+int leerNumeroEntero(void) {
+    int number = 0;
+    do {
+        scanf("%d", &number);
+        if (number < 0) puts("Digite un numero entero");
+    } while (number < 0);
+
+    return number;
+}
+
+void elegirOpcion(const int opc) {
+    switch (opc) {
     case 0:
-        return 0;
+        return;
         break;
 
     case 1:
@@ -64,30 +80,17 @@ int main(int argc, char const* argv[]) {
         break;
 
     default:
-        puts("JIJIJA");
         break;
     }
-
-    return 0;
-}
-
-int leerNumeroEntero(void) {
-    int number = 0;
-    do {
-        scanf("%d", &number);
-        if (number < 0) puts("Digite un numero entero");
-    } while (number < 0);
-
-    return number;
 }
 
 float elevarAlExponente(float base, float exponent) {
     float resultado;
-    resultado = exponent == 0?1:base * elevarAlExponente(base, exponent -1); 
+    resultado = exponent == 0 ? 1 : base * elevarAlExponente(base, exponent - 1);
     return resultado;
 }
 unsigned digitosNumero(unsigned) {
-    return;
+    return 0;
 }
 
 void numeroPrimo(void) {
@@ -108,7 +111,7 @@ void numeroPrimo(void) {
 }
 
 void numeroArmstrong(void) {
-
+    
     return;
 }
 
