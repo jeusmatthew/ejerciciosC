@@ -15,7 +15,7 @@ firmas:
 int primo;
 
 */
-
+ //HOLA
 #include <stdio.h>
 
 int leerNumeroEntero(void);
@@ -111,7 +111,7 @@ void numeroPrimo(void) {
 }
 
 void numeroArmstrong(void) {
-    
+
     return;
 }
 
