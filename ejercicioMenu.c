@@ -22,16 +22,13 @@ long long leerNumeroEntero(void);
 float elevarAlExponente(float, float);
 unsigned digitosNumero(unsigned);
 void elegirOpcion(const int);
+long long unsigned getFactorial(long long unsigned);
 
 void numeroPrimo(void);
 void numeroArmstrong(void);
 void numeroRepunit(void);
 void numeroPerfecto(void);
 void trianguloPascal(void);
-
-unsigned getFactorial(int num) {
-    return num == 0 ? 1 : num * getFactorial(num - 1);
-}
 
 int main(int argc, char const* argv[]) {
     int number = 0, opcion = 0;
@@ -41,7 +38,7 @@ int main(int argc, char const* argv[]) {
         opcion = leerNumeroEntero();
         elegirOpcion(opcion);
 
-    } while (opcion > 5);
+    } while (opcion != 0);
 
     return 0;
 }
@@ -94,6 +91,7 @@ float elevarAlExponente(float base, float exponent) {
     resultado = exponent == 0 ? 1 : base * elevarAlExponente(base, exponent - 1);
     return resultado;
 }
+
 unsigned digitosNumero(unsigned num) {
     unsigned short numSize = 0;
     while (num > 0) {
@@ -101,6 +99,10 @@ unsigned digitosNumero(unsigned num) {
         numSize++;
     }
     return numSize;
+}
+
+long long unsigned getFactorial(long long unsigned num) {
+    return num == 0 ? 1 : num * getFactorial(num - 1);
 }
 
 void numeroPrimo(void) {
@@ -163,17 +165,17 @@ void numeroPerfecto(void) {
 }
 
 void trianguloPascal(void) {
-    unsigned number = leerNumeroEntero();
+    long long unsigned number = leerNumeroEntero();
 
     for (int row = 0; row < number; row++) {
         //espacios en blanco
-        for(int espacio = number - row - 1; espacio > 0; espacio--){
+        for (int espacio = number - row - 1; espacio > 0; espacio--) {
             putchar(' ');
         }
-        
+
         //formula que da
         for (int column = 0; column <= row; column++) {
-            printf("%u ", getFactorial(row) / (getFactorial(column) * getFactorial(row - column)));
+            printf("%llu ", getFactorial(row) / (getFactorial(column) * getFactorial(row - column)));
         }
 
         putchar('\n');
