@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <ctype.h>
-#include <string.h>
+// #include <string.h>
 
 #define STR_SIZE 40
 
@@ -19,8 +19,11 @@ int main(int argc, char const* argv[]) {
     char cadena[STR_SIZE] = "";
 
     gets(cadena);
+
     limpiarCadena(cadena);
+
     errorLexico(cadena);
+
     // imprimirCaracteres(cadena);
     // puts(cadena);
 
@@ -39,6 +42,7 @@ int main(int argc, char const* argv[]) {
 }
 
 void imprimirCaracteres(char* cadena) {
+    printf("Direccion de memoria primer caracter: %x", cadena);
     for (int i = 0; i < STR_SIZE; i++) {
         printf("%d: ascii: %d char: %c\n", i, cadena[i], cadena[i]);
     }
@@ -65,8 +69,6 @@ void limpiarCadena(char* cadena) {
 
 void errorLexico(char* cadena) {
     for (int i = 0; cadena[i] != '\0'; i++) {
-
-
 
         if (validarCaracter(cadena[i]) == 1) {
             printf("Error lexico en el caracter: %c", cadena[i]);
