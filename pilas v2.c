@@ -8,7 +8,7 @@ typedef struct nodo {
 	Item elemento;
 	struct nodo* siguiente;
 }Nodo;
-
+//test
 typedef struct {
 	Nodo* cima;
 }Pila;
