@@ -17,7 +17,6 @@ int main(int argc, char const* argv[]) {
     char cadena[STR_SIZE] = "";
 
     gets(cadena);
-    // limpiarCadena(cadena);
     limpiarCadena(cadena);
     imprimirCaracteres(cadena);
     // puts(cadena);
@@ -41,7 +40,7 @@ int main(int argc, char const* argv[]) {
 
 void imprimirCaracteres(char* cadena) {
     for (int i = 0; i < STR_SIZE; i++) {
-        printf("%d: %c\n", i, cadena[i]);
+        printf("%d: %d %c\n", i, cadena[i], cadena[i]);
     }
 }
 
@@ -57,6 +56,7 @@ char* trimCadenaMemoria(char* cadena) {
     return nuevaCadena;
 }
 
+// todavia se tienen residuos revisar
 void limpiarCadena(char* cadena) {
     // " 1 + 2\n" -> "1+2\0"
     char nuevaCadena[STR_SIZE];
@@ -69,10 +69,10 @@ void limpiarCadena(char* cadena) {
     }
     nuevaCadena[j] = '\0';
 
-    for(int i = 0; i < STR_SIZE; i++){
+    for (int i = 0; i < STR_SIZE; i++) {
         cadena[i] = nuevaCadena[i];
     }
-    
+
 }
 
 int isOperator(char caracter) {
