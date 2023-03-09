@@ -160,47 +160,49 @@ int main(int argc, char* argv[]) {
 			}
 
 		}
-
 		// si es un operador
-		if (numero[i] != '+') {
-			while ((tamanioPila(pila) != 0) && "operador de mayor precedencia") {
-
-				//extraemos elemento de la pila
-				ci = cima(&pila);
-
-				//insertamos al final de la lista de salida
-				//char c = numero[i];
-				concatenarCharACadena(ci, cadena_salida);
-
-			}
-			insertar(&pila, numero[i]);
+		
+		if (numero[i] != '^') {
+			
 		}
 
-		//lo msimo se repite con los demas !!!!!primero probarlo unicamente con la suma!!!!!
-		if (numero[i] != '-') {
-
-		}
+		
 		if (numero[i] != '/') {
 
 		}
+		
+		
 		if (numero[i] != '*') {
 
 		}
-		if (numero[i] != '^') {
-
+		
+		
+		
+		if (numero[i] == '+') {
+			
+			while ((tamanioPila(pila) != 0) && verificarPresedencia(cima(&pila), numero[i])) { //<----------------------
+				//extraemos elemento de la pila
+				ci = cima(&pila);
+				//insertamos al final de la lista de salida
+				//char c = numero[i];
+				concatenarCharACadena(ci, cadena_salida);
+			}
+			insertar(&pila, numero[i]);
 		}
-
-
+		
+		
+		if (numero[i] != '-') {
+			
+		}
 
 		i++;
 	}
 
 	//mientras la pila no este vacia
-	while (tamanioPila(pila) != 0) {
+	while (tamanioPila(pila) == 0) {
 		//extraemos elemento de la pila
 		ci = cima(&pila);
 		//temporal_2 = (int)ci;
-
 		//insertamos al final de la lista de salida
 		//char c = numero[i];
 		concatenarCharACadena(ci, cadena_salida);

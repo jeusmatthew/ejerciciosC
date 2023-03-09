@@ -22,7 +22,7 @@ int main(int argc, char const *argv[])
 	printf("Antes de concatenar: %s\n", cadena);
 	// Concatenar
 	char c = '+';
-	concatenarCharACadena(c, cadena);
+	concatenarCharACadena(50, cadena);
 	printf("Despu�s de concatenar: %s\n", cadena);
 	return 0;
 }
