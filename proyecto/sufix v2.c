@@ -27,6 +27,10 @@ void limpiarPila(Pila*);
 int tamanioPila(Pila);
 void concatenarCharACadena(char, char*);
 int verificarPresedencia(char, char);
+void errorLexico(char*);
+int isOperator(char);
+int validarCaracter(char);
+
 
 int main(int argc, char* argv[]) {
 	int i = 0;
@@ -45,29 +49,20 @@ int main(int argc, char* argv[]) {
 		//int var = numero[i] - '0'; solo como nota
 
 
-		//seccion segun sea
-
+	//seccion segun sea
 		// si es digito
-		if (isdigit(numero[i]) != 0) {
+		if (isdigit(numero[i])) {
 			//insertamos al final de la lista de salida
 			char c = numero[i];
 			concatenarCharACadena(c, cadena_salida);
 		}
-
-		//que es esto de la variable x?????
-		/*
-
-		*/
-
 		//si es parentesis izquierdo 
-		if (numero[i] == '(') {
+		else if (numero[i] == '(') {
 			insertar(&pila, numero[i]);
 		}
-
 		//si es parentesis derecho 
-
-		//mientras la pila no este vacia y cima no sea (
-		if (numero[i] == ')') {
+		else if (numero[i] == ')') {
+			//mientras la pila no este vacia y cima no sea (
 			while ((tamanioPila(pila) != 0) && (cima(&pila) != '(')) {
 
 				//extraemos elemento extraer != destruir
@@ -81,8 +76,8 @@ int main(int argc, char* argv[]) {
 				//insertamos en la lista de salida
 				char c = numero[i];
 				concatenarCharACadena(c, cadena_salida);
-
 			}
+
 			if (numero[i] == '(') {
 				// extraemos y destuimos
 				eliminarPrimerNodo(&pila);
@@ -94,25 +89,7 @@ int main(int argc, char* argv[]) {
 
 		}
 		// si es un operador
-
-		if (numero[i] != '^') {
-
-		}
-
-
-		if (numero[i] != '/') {
-
-		}
-
-
-		if (numero[i] != '*') {
-
-		}
-
-
-
-		if (numero[i] == '+') {
-
+		else if (isOperator(numero[i])) {
 			while ((tamanioPila(pila) != 0) && verificarPresedencia(cima(&pila), numero[i])) { //<----------------------
 				//extraemos elemento de la pila
 				ci = cima(&pila);
@@ -122,12 +99,6 @@ int main(int argc, char* argv[]) {
 			}
 			insertar(&pila, numero[i]);
 		}
-
-
-		if (numero[i] != '-') {
-
-		}
-
 		i++;
 	}
 
@@ -273,3 +244,20 @@ int verificarPresedencia(char ci, char e) {
 
 }
 
+void errorLexico(char* cadena) {
+	for (int i = 0; cadena[i] != '\0'; i++) {
+
+		if (validarCaracter(cadena[i]) == 1) {
+			printf("Error lexico en el caracter: %c", cadena[i]);
+			return;
+		}
+	}
+}
+
+int isOperator(char caracter) {
+	return (caracter >= '(' && caracter <= '+') || caracter == '-' || caracter == '/' || caracter == '^';
+}
+
+int validarCaracter(char caracter) {
+	return !isdigit(caracter) && !isOperator(caracter);
+}
