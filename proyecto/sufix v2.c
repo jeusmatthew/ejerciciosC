@@ -31,7 +31,6 @@ void errorLexico(char*);
 int isOperator(char);
 int validarCaracter(char);
 
-
 int main(int argc, char* argv[]) {
 	int i = 0;
 	Pila pila;
@@ -103,7 +102,7 @@ int main(int argc, char* argv[]) {
 	}
 
 	//mientras la pila no este vacia
-	while (tamanioPila(pila) == 0) {
+	while (tamanioPila(pila) != 0) {
 		//extraemos elemento de la pila
 		ci = cima(&pila);
 		//temporal_2 = (int)ci;
@@ -116,6 +115,7 @@ int main(int argc, char* argv[]) {
 
 	// limpiamos la pila para reutilizarla en la segunda parte
 	limpiarPila(&pila);
+	puts(cadena_salida);
 	return 0;
 }
 
@@ -168,14 +168,30 @@ void limpiarPila(Pila* pila) {
 }
 
 //cantidad de elementos en la pila
+// int tamanioPila(Pila pila) {
+// 	Nodo* act;
+// 	int cantElementos = 0;
+// 	for (act = pila.cima; act != NULL; act = act->siguiente) {
+// 		printf("act: %x\n", act);
+// 		cantElementos++;
+// 	}
+// 	return cantElementos;
+// }
+
+
+//cantidad de elementos en la pila
 int tamanioPila(Pila pila) {
-	Nodo* act;
-	int cantElementos = 0;
-	for (act = pila.cima; act != NULL; act = act->siguiente) {
-		cantElementos++;
+	int contador = 0;
+	if (pila.cima == NULL)
+		return contador;
+	struct nodo* temporal = pila.cima;
+	while (temporal != NULL) {
+		contador++;
+		temporal = temporal->siguiente;
 	}
-	return cantElementos;
+	return contador;
 }
+
 
 void concatenarCharACadena(char c, char* cadena) {
 	char cadenaTemporal[2];
@@ -255,7 +271,7 @@ void errorLexico(char* cadena) {
 }
 
 int isOperator(char caracter) {
-	return (caracter >= '(' && caracter <= '+') || caracter == '-' || caracter == '/' || caracter == '^';
+	return caracter == '*' || caracter == '+' || caracter == '-' || caracter == '/' || caracter == '^';
 }
 
 int validarCaracter(char caracter) {
