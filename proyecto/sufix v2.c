@@ -7,15 +7,15 @@
 //https://parzibyte.me/blog/2018/11/19/digito-char-entero-c/#:~:text=Si%20queremos%20convertir%20un%20char,el%20car%C3%A1cter%20ASCII%20n%C3%BAmero%2053.
 
 //funciones de nodos
-typedef int Item;
+typedef char Item;
 typedef struct nodo {
 	Item elemento;
 	struct nodo* siguiente;
-}Nodo;
+} Nodo;
 
-typedef struct {
+typedef struct pila {
 	Nodo* cima;
-}Pila;
+} Pila;
 
 //funciones
 void crearPila(Pila*);
@@ -44,43 +44,35 @@ int main(int argc, char* argv[]) {
 	char numero[30];
 	gets(numero);
 	while (numero[i] != '\0') {
+		char e = numero[i];
 		//no eliminaremos ningun termino simplemente recorreres el string
 		//int var = numero[i] - '0'; solo como nota
 
-
 	//seccion segun sea
 		// si es digito
-		if (isdigit(numero[i])) {
+		if (isdigit(e)) {
 			//insertamos al final de la lista de salida
 			char c = numero[i];
 			concatenarCharACadena(c, cadena_salida);
 		}
 		//si es parentesis izquierdo 
-		else if (numero[i] == '(') {
+		else if (e == '(') {
 			insertar(&pila, numero[i]);
 		}
 		//si es parentesis derecho 
-		else if (numero[i] == ')') {
+		else if (e == ')') {
 			//mientras la pila no este vacia y cima no sea (
 			while ((tamanioPila(pila) != 0) && (cima(&pila) != '(')) {
-
-				//extraemos elemento extraer != destruir
-				/*
 				ci = cima(&pila);
-				temporal = ci;
 				eliminarPrimerNodo(&pila);
-				puts("BORRE LA CIMA ");
-				*/
-
 				//insertamos en la lista de salida
-				char c = numero[i];
-				concatenarCharACadena(c, cadena_salida);
+				concatenarCharACadena(ci, cadena_salida);
 			}
 
-			if (numero[i] == '(') {
+			if (cima(&pila) == '(') {
 				// extraemos y destuimos
 				eliminarPrimerNodo(&pila);
-				puts("BORRE LA CIMA ");
+				// puts("BORRE LA CIMA ");
 			}
 			else {
 				puts("ERROR 2");
@@ -88,10 +80,11 @@ int main(int argc, char* argv[]) {
 
 		}
 		// si es un operador
-		else if (isOperator(numero[i])) {
+		else if (isOperator(e)) {
 			while ((tamanioPila(pila) != 0) && verificarPresedencia(cima(&pila), numero[i])) { //<----------------------
 				//extraemos elemento de la pila
 				ci = cima(&pila);
+				eliminarPrimerNodo(&pila);
 				//insertamos al final de la lista de salida
 				//char c = numero[i];
 				concatenarCharACadena(ci, cadena_salida);
@@ -105,13 +98,12 @@ int main(int argc, char* argv[]) {
 	while (tamanioPila(pila) != 0) {
 		//extraemos elemento de la pila
 		ci = cima(&pila);
+		eliminarPrimerNodo(&pila);
 		//temporal_2 = (int)ci;
 		//insertamos al final de la lista de salida
 		//char c = numero[i];
 		concatenarCharACadena(ci, cadena_salida);
-
 	}
-
 
 	// limpiamos la pila para reutilizarla en la segunda parte
 	limpiarPila(&pila);
@@ -124,8 +116,7 @@ void crearPila(Pila* pila) {
 }
 
 int pilaVacia(Pila pila) {
-	return (pila.cima == NULL);
-	// 1 VACIA  0 CON ELEMENTOS
+	return pila.cima == NULL;
 }
 
 //retornar el primer elemento de la pila
@@ -168,29 +159,28 @@ void limpiarPila(Pila* pila) {
 }
 
 //cantidad de elementos en la pila
-// int tamanioPila(Pila pila) {
-// 	Nodo* act;
-// 	int cantElementos = 0;
-// 	for (act = pila.cima; act != NULL; act = act->siguiente) {
-// 		printf("act: %x\n", act);
-// 		cantElementos++;
-// 	}
-// 	return cantElementos;
-// }
+int tamanioPila(Pila pila) {
+	Nodo* act;
+	int cantElementos = 0;
+	for (act = pila.cima; act != NULL; act = act->siguiente) {
+		cantElementos++;
+	}
+	return cantElementos;
+}
 
 
 //cantidad de elementos en la pila
-int tamanioPila(Pila pila) {
-	int contador = 0;
-	if (pila.cima == NULL)
-		return contador;
-	struct nodo* temporal = pila.cima;
-	while (temporal != NULL) {
-		contador++;
-		temporal = temporal->siguiente;
-	}
-	return contador;
-}
+// int tamanioPila(Pila pila) {
+// 	int contador = 0;
+// 	if (pila.cima == NULL)
+// 		return contador;
+// 	struct nodo* temporal = pila.cima;
+// 	while (temporal != NULL) {
+// 		contador++;
+// 		temporal = temporal->siguiente;
+// 	}
+// 	return contador;
+// }
 
 
 void concatenarCharACadena(char c, char* cadena) {
@@ -251,11 +241,9 @@ int verificarPresedencia(char ci, char e) {
 
 	if (prioridad_a <= prioridad_b) {
 		return 1; // si se cumple la condicion
-		puts("se cumple");
 	}
 	else {
 		return 0; //no se cumple la condicion
-		puts("NOOO se cumple");
 	}
 
 }
