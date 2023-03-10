@@ -16,8 +16,6 @@ typedef struct nodo {
 typedef struct pila {
     Nodo* cima;
 } Pila;
-
-//funciones
 void crearPila(Pila*);
 int pilaVacia(Pila);
 Item cima(Pila*);
@@ -25,17 +23,27 @@ void insertar(Pila*, Item);
 void eliminarPrimerNodo(Pila*);
 void limpiarPila(Pila*);
 int tamanioPila(Pila);
+
+//funciones
 void concatenarCharACadena(char, char*);
 int verificarPresedencia(char, char);
 void errorLexico(char*);
 int isOperator(char);
 int validarCaracter(char);
+void infijaAPosfija(char*);
+
+int main(int argc, char* argv[]) {
+    char cadena[31];
+    gets(cadena);
+    infijaAPosfija(cadena);
+    puts(cadena);
+}
 
 void infijaAPosfija(char* cadenaInfija) {
     Pila pila;
     Item ci;
     char cadenaSalida[31] = "";
-    int error;
+    int error = 0;
 
     crearPila(&pila);
 
@@ -76,87 +84,7 @@ void infijaAPosfija(char* cadenaInfija) {
     }
 
     limpiarPila(&pila);
-    return;
-}
-
-int main(int argc, char* argv[]) {
-    int i = 0;
-    Pila pila;
-    Item ci;
-    //pila iniciada vacia
-    crearPila(&pila);
-
-    //lista inicida vacia
-    char cadena_salida[31] = "";
-
-    char numero[30];
-    gets(numero);
-    while (numero[i] != '\0') {
-        char e = numero[i];
-        //no eliminaremos ningun termino simplemente recorreres el string
-        //int var = numero[i] - '0'; solo como nota
-
-    //seccion segun sea
-        // si es digito
-        if (isdigit(e)) {
-            //insertamos al final de la lista de salida
-            char c = numero[i];
-            concatenarCharACadena(c, cadena_salida);
-        }
-        //si es parentesis izquierdo 
-        else if (e == '(') {
-            insertar(&pila, numero[i]);
-        }
-        //si es parentesis derecho 
-        else if (e == ')') {
-            //mientras la pila no este vacia y cima no sea (
-            while ((tamanioPila(pila) != 0) && (cima(&pila) != '(')) {
-                ci = cima(&pila);
-                eliminarPrimerNodo(&pila);
-                //insertamos en la lista de salida
-                concatenarCharACadena(ci, cadena_salida);
-            }
-
-            if (cima(&pila) == '(') {
-                // extraemos y destuimos
-                eliminarPrimerNodo(&pila);
-                // puts("BORRE LA CIMA ");
-            }
-            else {
-                puts("ERROR 2");
-            }
-
-        }
-        // si es un operador
-        else if (isOperator(e)) {
-            while ((tamanioPila(pila) != 0) && verificarPresedencia(cima(&pila), numero[i])) { //<----------------------
-                //extraemos elemento de la pila
-                ci = cima(&pila);
-                eliminarPrimerNodo(&pila);
-                //insertamos al final de la lista de salida
-                //char c = numero[i];
-                concatenarCharACadena(ci, cadena_salida);
-            }
-            insertar(&pila, numero[i]);
-        }
-        i++;
-    }
-
-    //mientras la pila no este vacia
-    while (tamanioPila(pila) != 0) {
-        //extraemos elemento de la pila
-        ci = cima(&pila);
-        eliminarPrimerNodo(&pila);
-        //temporal_2 = (int)ci;
-        //insertamos al final de la lista de salida
-        //char c = numero[i];
-        concatenarCharACadena(ci, cadena_salida);
-    }
-
-    // limpiamos la pila para reutilizarla en la segunda parte
-    limpiarPila(&pila);
-    puts(cadena_salida);
-    return 0;
+    strcpy(cadenaInfija, cadenaSalida);
 }
 
 void crearPila(Pila* pila) {
