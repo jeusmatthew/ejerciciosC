@@ -8,16 +8,14 @@
 // https://parzibyte.me/blog
 
 //2 -> 2\0|
-void concatenarCharACadena(char c, char *cadena)
-{
+void concatenarCharACadena(char c, char* cadena) {
 	char cadenaTemporal[2];
 	cadenaTemporal[0] = c;
 	cadenaTemporal[1] = '\0';
 	strcat(cadena, cadenaTemporal);
 }
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const* argv[]) {
 	char cadena[MAXIMA_LONGITUD_CADENA] = "";
 	printf("Antes de concatenar: %s\n", cadena);
 	// Concatenar

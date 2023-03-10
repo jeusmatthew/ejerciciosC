@@ -4,9 +4,7 @@
 
 #define STR_SIZE 40
 
-int validarCaracter(char);
 // void validadCadena(char[]);
-int isOperator(char);
 
 void limpiarCadena(char*);
 // char* trimCadenaMemoria(char*);
@@ -14,6 +12,9 @@ void limpiarCadena(char*);
 void imprimirCaracteres(char*);
 
 void errorLexico(char*);
+int isOperator(char);
+int validarCaracter(char);
+
 
 int main(int argc, char const* argv[]) {
     char cadena[STR_SIZE] = "";
