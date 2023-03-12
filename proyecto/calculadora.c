@@ -1,5 +1,9 @@
 /*
-Uniendo todo . . .
+Ver 1.0.0
+Autores:
+PABLO ERNESTO BAEZA LARA
+JESUS MATEO ORTIZ CHAY
+ORLANDO ISAIAS RODRIGUEZ COUOH
 */
 
 #include <stdio.h>
