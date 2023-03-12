@@ -15,7 +15,8 @@ ORLANDO ISAIAS RODRIGUEZ COUOH
 #define STR_LEN 31
 
 //funciones de nodos
-typedef int Item;
+typedef int Item; //resuladtos decimales
+
 typedef struct nodo {
     Item elemento;
     struct nodo* siguiente;
@@ -196,6 +197,7 @@ void infijaAPosfija(char* cadenaInfija) {
         }
         else if (isOperator(caracterEval)) {
             while (tamanioPila(pila) != 0 && verificarPresedencia(cima(&pila), caracterEval)) {
+                printf("%d", verificarPresedencia(cima(&pila), caracterEval));
                 ci = cima(&pila);
                 eliminarPrimerNodo(&pila);
                 concatenarCharACadena(ci, cadenaSalida);
@@ -321,7 +323,7 @@ int verificarPresedencia(char ci, char e) {
         prioridad_b = 1;
     }
 
-    return prioridad_a <= prioridad_b;
+    return prioridad_a >= prioridad_b;
 }
 
 int obtenerResultado(char* expresion) {
