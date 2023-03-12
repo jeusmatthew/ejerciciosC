@@ -6,6 +6,7 @@ Uniendo todo . . .
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 #define STR_LEN 31
 
@@ -21,7 +22,7 @@ int validarCaracter(char);
 
 
 //funciones de nodos
-typedef char Item;
+typedef int Item;
 typedef struct nodo {
     Item elemento;
     struct nodo* siguiente;
@@ -42,15 +43,18 @@ void concatenarCharACadena(char, char*);
 int verificarPresedencia(char, char);
 void infijaAPosfija(char*);
 
+void obtenerResultado(char*);
+int realizarOperacion(int, int, char);
+
 int main() {
     char Expresion[30];
 
     puts("Ingrese una expresion aritmetica");
     leerExpresion(Expresion);
-
     errorLexico(Expresion);
     errorSintaxis(Expresion);
     infijaAPosfija(Expresion);
+    obtenerResultado(Expresion);
     puts(Expresion);
 
     return 0;
@@ -331,4 +335,61 @@ int verificarPresedencia(char ci, char e) {
     }
 
     return prioridad_a <= prioridad_b;
+}
+
+void obtenerResultado(char* expresion) {
+
+    Pila pila;
+    Item ci;
+
+    char caracterEvaluado;
+    int numero = 0, operando1 = 0, operando2 = 0, resultado = 0;
+
+    for (int i = 0; expresion[i] != '\0'; i++) {
+        caracterEvaluado = expresion[i];
+        // printf("Caracter a evaluar %c\n", caracterEvaluado);
+        if (isdigit(caracterEvaluado)) {
+            numero = atoi(&caracterEvaluado);
+            insertar(&pila, numero);
+            ci = cima(&pila);
+            printf("\t%d es la cima ahora\n", ci);
+        }
+        else {
+
+            ci = cima(&pila);
+            operando1 = (int)ci;
+            eliminarPrimerNodo(&pila);
+
+            ci = cima(&pila);
+            operando2 = (int)ci;
+            eliminarPrimerNodo(&pila);
+
+            resultado = realizarOperacion(operando1, operando2, caracterEvaluado);
+            
+            insertar(&pila, resultado);
+        }
+
+    }
+    ci = cima(&pila);
+    printf("El resultado es: %d", ci);
+
+}
+
+int realizarOperacion(int op1, int op2, char op) {
+    switch (op) {
+    case '+':
+        return op1 + op2;
+    case '-':
+        return op1 - op2;
+    case '*':
+        return op1 * op2;
+    case '/':
+        return op1 / op2;
+    case '^':
+        return pow(op1, op2);
+
+    default:
+        puts("World error!");
+        break;
+    }
 }
