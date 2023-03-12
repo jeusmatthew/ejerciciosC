@@ -29,7 +29,7 @@ void limpiarPila(Pila*);
 int tamanioPila(Pila);
 
 //funciones
-char leerExpresion(char* Expresion); // lee expresion
+// void leerExpresion(char* Expresion); // lee expresion
 int errorSintaxis(char* Expresion); // error sintactico
 int errorLexico(char*); //Verifica si todos los caracteres son validos
 int isOperator(char caracter); //detecta si es un operador
@@ -44,10 +44,10 @@ int obtenerResultado(char*);
 int realizarOperacion(int, int, char);
 
 int main() {
-    char Expresion[30];
+    char Expresion[STR_LEN];
 
     puts("Ingrese una expresion aritmetica");
-    leerExpresion(Expresion);
+    gets(Expresion);
 
     if (errorLexico(Expresion) || errorSintaxis(Expresion)) return 0;
 
@@ -56,13 +56,7 @@ int main() {
     return 0;
 }
 
-char leerExpresion(char* Expresion) { //leemos expresion
-
-    gets(Expresion);
-
-    return *Expresion;
-}
-
+// 1    Error
 int errorSintaxis(char* Expresion) { // para evaluar errores
     int i = 0, balance = 0, numeroEspacios;
 
@@ -98,7 +92,7 @@ int errorSintaxis(char* Expresion) { // para evaluar errores
             }
 
             if (balance < 0) { // si el balance es menor a cero, significa que hay más parentesis derechos que izquierdos, al menos uno no tuvo apertura 
-                printf("Error: cierre de parentesis sin correspondiente apertura.n");
+                printf("Error: cierre de parentesis sin correspondiente apertura\n");
                 return 1;
             }
 
@@ -158,10 +152,7 @@ int isOperator3(char caracter) {
     return caracter == '*' || caracter == '+' || caracter == '-' || caracter == '/' || caracter == '^';
 }
 
-/*
-0   Sin errores
-1   Error
-*/
+//1 Error
 int errorLexico(char* cadena) {
     for (int i = 0; cadena[i] != '\0'; i++) {
         if (!isdigit(cadena[i]) && !isOperator(cadena[i])) {
@@ -174,20 +165,21 @@ int errorLexico(char* cadena) {
 void infijaAPosfija(char* cadenaInfija) {
     Pila pila;
     Item ci;
-    char cadenaSalida[31] = "";
+    char cadenaSalida[STR_LEN] = "";
     int error = 0;
 
-    crearPila(&pila);
+    crearPila(&pila); //Pila iniciada
 
     int i = 0;
     while (cadenaInfija[i] != '\0' && !error) {
-        char e = cadenaInfija[i];
+        char caracterEval = cadenaInfija[i];
 
-        if (isdigit(e))
-            concatenarCharACadena(e, cadenaSalida);
-        else if (e == '(')
-            insertar(&pila, e);
-        else if (e == ')') {
+        //Segun sea digito, parentesis u operador
+        if (isdigit(caracterEval))
+            concatenarCharACadena(caracterEval, cadenaSalida);
+        else if (caracterEval == '(')
+            insertar(&pila, caracterEval);
+        else if (caracterEval == ')') {
             while (tamanioPila(pila) != 0 && cima(&pila) != '(') {
                 ci = cima(&pila);
                 eliminarPrimerNodo(&pila);
@@ -198,13 +190,13 @@ void infijaAPosfija(char* cadenaInfija) {
             else
                 error = 1;
         }
-        else if (isOperator(e)) {
-            while (tamanioPila(pila) != 0 && verificarPresedencia(cima(&pila), e)) {
+        else if (isOperator(caracterEval)) {
+            while (tamanioPila(pila) != 0 && verificarPresedencia(cima(&pila), caracterEval)) {
                 ci = cima(&pila);
                 eliminarPrimerNodo(&pila);
                 concatenarCharACadena(ci, cadenaSalida);
             }
-            insertar(&pila, e);
+            insertar(&pila, caracterEval);
         }
         i++;
     }
@@ -342,18 +334,17 @@ int obtenerResultado(char* expresion) {
         if (isdigit(caracterEvaluado)) {
             numero = atoi(&caracterEvaluado);
             insertar(&pila, numero);
-            ci = cima(&pila);
+            // ci = cima(&pila);
             // printf("\t%d es la cima ahora\n", ci);
         }
         else {
-
-            ci = cima(&pila);
-            operando1 = (int)ci;
+            //Extrae y destruye el 2do operando
+            operando2 = cima(&pila);
             eliminarPrimerNodo(&pila);
             // puts("Cima 1 borrada");
 
-            ci = cima(&pila);
-            operando2 = (int)ci;
+            //Extrae y destruye el 1er operando
+            operando1 = cima(&pila);
             eliminarPrimerNodo(&pila);
             // puts("Cima 2 borrada");
 
