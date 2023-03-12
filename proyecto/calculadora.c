@@ -43,7 +43,7 @@ void concatenarCharACadena(char, char*);
 int verificarPresedencia(char, char);
 void infijaAPosfija(char*);
 
-void obtenerResultado(char*);
+int obtenerResultado(char*);
 int realizarOperacion(int, int, char);
 
 int main() {
@@ -54,9 +54,8 @@ int main() {
     errorLexico(Expresion);
     errorSintaxis(Expresion);
     infijaAPosfija(Expresion);
-    obtenerResultado(Expresion);
-    puts(Expresion);
-
+    printf("El resultado de la expresion es: %d", obtenerResultado(Expresion));
+    
     return 0;
 }
 
@@ -147,7 +146,7 @@ void errorSintaxis(char* Expresion) { // para evaluar errores
         printf("Error: apertura de parentesis sin correspondiente cierre.\n");
         exit(0);
     }
-    printf("La expresion es valida.\n"); //si no cumple con ninguna de las condiciones anteriores, la expresion es valida
+    // printf("La expresion es valida.\n"); //si no cumple con ninguna de las condiciones anteriores, la expresion es valida
 
 }
 
@@ -337,7 +336,7 @@ int verificarPresedencia(char ci, char e) {
     return prioridad_a <= prioridad_b;
 }
 
-void obtenerResultado(char* expresion) {
+int obtenerResultado(char* expresion) {
 
     Pila pila;
     Item ci;
@@ -352,17 +351,19 @@ void obtenerResultado(char* expresion) {
             numero = atoi(&caracterEvaluado);
             insertar(&pila, numero);
             ci = cima(&pila);
-            printf("\t%d es la cima ahora\n", ci);
+            // printf("\t%d es la cima ahora\n", ci);
         }
         else {
 
             ci = cima(&pila);
             operando1 = (int)ci;
             eliminarPrimerNodo(&pila);
+            // puts("Cima 1 borrada");
 
             ci = cima(&pila);
             operando2 = (int)ci;
             eliminarPrimerNodo(&pila);
+            // puts("Cima 2 borrada");
 
             resultado = realizarOperacion(operando1, operando2, caracterEvaluado);
             
@@ -371,8 +372,7 @@ void obtenerResultado(char* expresion) {
 
     }
     ci = cima(&pila);
-    printf("El resultado es: %d", ci);
-
+    return ci;
 }
 
 int realizarOperacion(int op1, int op2, char op) {
