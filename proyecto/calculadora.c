@@ -1,5 +1,5 @@
 /*
-Ver 1.0.0
+Ver 1.0.3
 Autores:
 PABLO ERNESTO BAEZA LARA
 JESUS MATEO ORTIZ CHAY
@@ -57,7 +57,7 @@ int main() {
     if (errorLexico(Expresion) || errorSintaxis(Expresion)) return 0;
 
     infijaAPosfija(Expresion);
-    printf("El resultado de la expresion es: %.2f", obtenerResultado(Expresion));
+    printf("El resultado de la expresion es: %g", obtenerResultado(Expresion));
     return 0;
 }
 
