@@ -15,7 +15,7 @@ ORLANDO ISAIAS RODRIGUEZ COUOH
 #define STR_LEN 31
 
 //funciones de nodos
-typedef int Item; //resuladtos decimales
+typedef float Item; //resuladtos decimales
 
 typedef struct nodo {
     Item elemento;
@@ -45,8 +45,8 @@ void concatenarCharACadena(char, char*);
 int verificarPresedencia(char, char);
 void infijaAPosfija(char*);
 
-int obtenerResultado(char*);
-int realizarOperacion(int, int, char);
+float obtenerResultado(char*);
+float realizarOperacion(float, float, char);
 
 int main() {
     char Expresion[STR_LEN];
@@ -57,7 +57,7 @@ int main() {
     if (errorLexico(Expresion) || errorSintaxis(Expresion)) return 0;
 
     infijaAPosfija(Expresion);
-    printf("El resultado de la expresion es: %d", obtenerResultado(Expresion));
+    printf("El resultado de la expresion es: %.2f", obtenerResultado(Expresion));
     return 0;
 }
 
@@ -195,9 +195,9 @@ void infijaAPosfija(char* cadenaInfija) {
             else
                 error = 1;
         }
-        else if (isOperator(caracterEval)) {
+        else if (isOperator3(caracterEval)) {
             while (tamanioPila(pila) != 0 && verificarPresedencia(cima(&pila), caracterEval)) {
-                printf("%d", verificarPresedencia(cima(&pila), caracterEval));
+                // printf("%d", verificarPresedencia(cima(&pila), caracterEval));
                 ci = cima(&pila);
                 eliminarPrimerNodo(&pila);
                 concatenarCharACadena(ci, cadenaSalida);
@@ -323,22 +323,22 @@ int verificarPresedencia(char ci, char e) {
         prioridad_b = 1;
     }
 
-    return prioridad_a >= prioridad_b;
+    return prioridad_a <= prioridad_b;
 }
 
-int obtenerResultado(char* expresion) {
+float obtenerResultado(char* expresion) {
 
     Pila pila;
     Item ci;
 
     char caracterEvaluado;
-    int numero = 0, operando1 = 0, operando2 = 0, resultado = 0;
+    float numero = 0, operando1 = 0, operando2 = 0, resultado = 0;
 
     for (int i = 0; expresion[i] != '\0'; i++) {
         caracterEvaluado = expresion[i];
         // printf("Caracter a evaluar %c\n", caracterEvaluado);
         if (isdigit(caracterEvaluado)) {
-            numero = atoi(&caracterEvaluado);
+            numero = atof(&caracterEvaluado);
             insertar(&pila, numero);
             // ci = cima(&pila);
             // printf("\t%d es la cima ahora\n", ci);
@@ -364,7 +364,7 @@ int obtenerResultado(char* expresion) {
     return ci;
 }
 
-int realizarOperacion(int op1, int op2, char op) {
+float realizarOperacion(float op1, float op2, char op) {
     switch (op) {
     case '+':
         return op1 + op2;
