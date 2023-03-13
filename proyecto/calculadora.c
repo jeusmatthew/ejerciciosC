@@ -195,7 +195,7 @@ void infijaAPosfija(char* cadenaInfija) {
             else
                 error = 1;
         }
-        else if (isOperator3(caracterEval)) {
+        else if (isOperator(caracterEval)) {
             while (tamanioPila(pila) != 0 && verificarPresedencia(cima(&pila), caracterEval)) {
                 // printf("%d", verificarPresedencia(cima(&pila), caracterEval));
                 ci = cima(&pila);
@@ -230,7 +230,7 @@ int pilaVacia(Pila pila) {
 Item cima(Pila* pila) {
     if (pilaVacia(*pila)) {
         puts("undeflow");
-        exit(1);
+        // exit(EXIT_FAILURE);
     }
     return pila->cima->elemento;
 }
@@ -283,13 +283,13 @@ void concatenarCharACadena(char c, char* cadena) {
 }
 
 int verificarPresedencia(char ci, char e) {
-    int prioridad_a, prioridad_b;
+    int prioridad_a = 0, prioridad_b = 0;
 
     switch (ci) {
-    case '(':
-    case ')':
-        prioridad_a = 4;
-        break;
+        // case '(':
+        // case ')':
+        //     prioridad_a = 4;
+        //     break;
 
     case '^':
         prioridad_a = 3;
@@ -305,10 +305,10 @@ int verificarPresedencia(char ci, char e) {
     }
 
     switch (e) {
-    case '(':
-    case ')':
-        prioridad_b = 4;
-        break;
+        // case '(':
+        // case ')':
+        //     prioridad_b = 4;
+        //     break;
 
     case '^':
         prioridad_b = 3;
@@ -323,7 +323,7 @@ int verificarPresedencia(char ci, char e) {
         prioridad_b = 1;
     }
 
-    return prioridad_a <= prioridad_b;
+    return prioridad_a >= prioridad_b;
 }
 
 float obtenerResultado(char* expresion) {
